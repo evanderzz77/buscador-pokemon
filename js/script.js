@@ -1,5 +1,7 @@
 const input = document.getElementById("input-busca");
 const form = document.getElementById("busca");
+let areas_por_jogo = {};
+let select_jogos = document.getElementById("games");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -73,7 +75,7 @@ async function buscarPokemon() {
 
         console.log(encontros_por_area);
 
-        const areas_por_jogo = encontros_por_area.reduce((acumulador, encontro) => {
+        areas_por_jogo = encontros_por_area.reduce((acumulador, encontro) => {
 
             encontro.jogos.forEach(jogo => {
 
@@ -89,8 +91,8 @@ async function buscarPokemon() {
 
         }, {});
 
-        const select_jogos = document.getElementById("games");
-
+        select_jogos.innerHTML = "";
+        
         Object.entries(areas_por_jogo).forEach(([chave, valor]) => {
             const option = document.createElement("option");
             option.value = chave;
@@ -99,13 +101,13 @@ async function buscarPokemon() {
             select_jogos.appendChild(option);
         });
 
-        select_jogos.addEventListener("change", () => {
-            const opcao = select_jogos.value;
-
-            document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
-        })
-
     } catch (erro) {
         document.getElementById("erro").textContent = `Erro: ${erro.message}`;
     }
 }
+
+select_jogos.addEventListener("change", () => {
+    const opcao = select_jogos.value;
+
+    document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
+});""
