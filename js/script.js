@@ -44,7 +44,7 @@ async function buscarPokemon() {
 
         //nome pokemon
         const nome = dados_pokemon.name;
-        document.getElementById("nome").textContent = `Nome: ${capitalizeFirstLetter(nome)}`;
+        document.getElementById("nome").textContent = `${capitalizeFirstLetter(nome)}`;
 
         //tipos pokemon
         const array_tipos = dados_pokemon.types;
@@ -110,4 +110,4 @@ select_jogos.addEventListener("change", () => {
     const opcao = select_jogos.value;
 
     document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
-});""
+});
