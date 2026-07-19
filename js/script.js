@@ -2,6 +2,7 @@ const input = document.getElementById("input-busca");
 const form = document.getElementById("busca");
 let areas_por_jogo = {};
 let select_jogos = document.getElementById("games");
+let opcao = "";
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -101,13 +102,17 @@ async function buscarPokemon() {
             select_jogos.appendChild(option);
         });
 
+        opcao = select_jogos.value;
+        document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
+
     } catch (erro) {
         document.getElementById("erro").textContent = `Erro: ${erro.message}`;
     }
 }
 
+
 select_jogos.addEventListener("change", () => {
-    const opcao = select_jogos.value;
+    opcao = select_jogos.value;
 
     document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
 });
