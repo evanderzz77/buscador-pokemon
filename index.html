@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,22 +8,24 @@
 </head>
 <body>
     <header>
-        <h1>Buscador de Pokémon</h1>
+        <h1 class="titulo">Buscador de Pokémon</h1>
     </header>
 
     <main>
         <section id="buscador">
-            <div id="barra-pesquisa">
-                <form id="busca">
-                    <label for="input-busca">Nome/número do pokémon:</label>
-                    <input type="text" id="input-busca" name="busca">
-                    <button type="submit">Buscar</button>
-                </form>
-            </div>
+            <form id="busca" role="search">
+                <label for="input-busca">Nome/número do pokémon:</label>
+                <input type="text" id="input-busca" name="busca">
+                <button type="submit">Buscar</button>
+            </form>
+        </section>
+
+        <section id="erros" hidden aria-live="polite">
+            <p id="erro"></p>
         </section>
 
         <section id="resultados" hidden>
-            <article id="card-pokemon">
+            <article class="card-pokemon">
                 <img src="" alt="" id="img">
                 <h2 id="nome"></h2>
                 <p id="num-pokedex"></p>
@@ -33,12 +35,6 @@
                 </select>
                 <p id="encontros"></p>
             </article>
-        </section>
-
-        <section id="erros" hidden>
-            <div id="card-erros">
-                <p id="erro"></p>
-            </div>
         </section>
     </main>
 
