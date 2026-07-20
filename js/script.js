@@ -3,6 +3,8 @@ const form = document.getElementById("busca");
 let areas_por_jogo = {};
 let select_jogos = document.getElementById("games");
 let opcao = "";
+let busca = ""
+buscarPokemon();
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -24,8 +26,13 @@ function capitalizeFirstLetter(str) {
 
 async function buscarPokemon() {
     try {
-        const busca = input.value;
+        busca = input.value.trim();
+        document.getElementById("erros").hidden = true;
         document.getElementById("resultados").hidden = false;
+
+        if (!busca) {
+            throw new Error("Pokémon não encontrado.");
+        }
 
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${busca}`);
 
@@ -74,8 +81,6 @@ async function buscarPokemon() {
            }
         });
 
-        console.log(encontros_por_area);
-
         areas_por_jogo = encontros_por_area.reduce((acumulador, encontro) => {
 
             encontro.jogos.forEach(jogo => {
@@ -102,10 +107,16 @@ async function buscarPokemon() {
             select_jogos.appendChild(option);
         });
 
-        opcao = select_jogos.value;
-        document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
+        if (Object.keys(areas_por_jogo).length === 0) {
+            document.getElementById("encontros").textContent = "Não encontrado na natureza (pokémon inicial/especial).";
+        } else {
+            opcao = select_jogos.value;
+            document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
+        }
 
     } catch (erro) {
+        document.getElementById("erros").hidden = false;
+        document.getElementById("resultados").hidden = true;
         document.getElementById("erro").textContent = `Erro: ${erro.message}`;
     }
 }
@@ -114,5 +125,7 @@ async function buscarPokemon() {
 select_jogos.addEventListener("change", () => {
     opcao = select_jogos.value;
 
-    document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
+    if (opcao && areas_por_jogo[opcao]) {
+        document.getElementById("encontros").textContent = `Encontros: ${areas_por_jogo[opcao].join(", ")}`;
+    }
 });
